@@ -4,10 +4,13 @@ const path = require("path")
 const app = express();
 
 app.use(express.static(path.join(__dirname, "/public")))
-app.use(express.static(path.join(__dirname, "/views")))
+//app.use(express.static(path.join(__dirname, "/views")))
+app.all("/", (request, response)=>{
+    response.sendFile(path.join(__dirname, "views", "index.html"))
+})
 
 app.all("/home", (request, response)=>{
-    response.sendFile(path.join(__dirname, "views", "home.html"))
+    response.sendFile(path.join(__dirname, "views", "index.html"))
 })
 
 app.all("/about", (request, response)=>{
