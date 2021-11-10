@@ -1,26 +1,35 @@
 const express = require("express")
 const path = require("path")
-
 const app = express();
+const hbs = require("hbs");
+const template = hbs.compile("Name : {{name}}");
+app.set("view engine", "hbs");
+app.set("views", path.join(__dirname, "views"));
+hbs.registerPartials(path.join(__dirname, "/views/partials"))
 
+
+const data = {
+    name: "Ricky",
+    surname: "Gervais"
+}
 app.use(express.static(path.join(__dirname, "/public")))
 //app.use(express.static(path.join(__dirname, "/views")))
 app.all("/", (request, response)=>{
-    response.sendFile(path.join(__dirname, "views", "index.html"))
+    response.render("home", data)
 })
 
 app.all("/home", (request, response)=>{
-    response.sendFile(path.join(__dirname, "views", "index.html"))
+    response.render("home", data)
 })
 
 app.all("/about", (request, response)=>{
-    response.sendFile(path.join(__dirname, "views", "about.html"))
+    response.render("about")
 })
 app.all("/works", (request, response)=>{
-    response.sendFile(path.join(__dirname, "views", "works.html"))
+    response.render("works")
 })
 app.all("/gallery", (request, response)=>{
-    response.sendFile(path.join(__dirname, "views", "gallery.html"))
+    response.render("gallery")
 })
 app.listen(3000, ()=>{
 
